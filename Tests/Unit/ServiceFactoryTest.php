@@ -1,4 +1,5 @@
 <?php
+
 namespace Caretaker\CaretakerInstance\Tests\Unit;
 
 use Caretaker\CaretakerInstance\Tests\Unit\Fixtures\DummyOperation;
@@ -51,20 +52,20 @@ class ServiceFactoryTest extends UnitTestCase
     {
         // Simulate TYPO3 ext conf
 
-        $extConf = array(
-            'crypto.' => array(
-                'instance.' => array(
+        $extConf = [
+            'crypto.' => [
+                'instance.' => [
                     'publicKey' => 'FakePublicKey',
                     'privateKey' => 'FakePrivateKey',
-                ),
-                'client.' => array(
+                ],
+                'client.' => [
                     'publicKey' => 'FakeClientPublicKey',
-                ),
-            ),
-            'security.' => array(
+                ],
+            ],
+            'security.' => [
                 'clientHostAddressRestriction' => '10.0.0.1',
-            ),
-        );
+            ],
+        ];
 
         $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['caretaker_instance'] =
             serialize($extConf);
@@ -87,26 +88,26 @@ class ServiceFactoryTest extends UnitTestCase
 
     public function testOperationClassRegistrationByConfVars()
     {
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['caretaker_instance']['operations'] = array(
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['caretaker_instance']['operations'] = [
             'dummy' => 'Caretaker\CaretakerInstance\Tests\Unit\Fixtures\DummyOperation',
-        );
+        ];
         $factory = \tx_caretakerinstance_ServiceFactory::getInstance();
         $operationManager = $factory->getOperationManager();
 
-        $result = $operationManager->executeOperation('dummy', array('foo' => 'bar'));
+        $result = $operationManager->executeOperation('dummy', ['foo' => 'bar']);
 
         $this->assertEquals('bar', $result->getValue());
     }
 
     public function testOperationInstanceRegistrationByConfVars()
     {
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['caretaker_instance']['operations'] = array(
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['caretaker_instance']['operations'] = [
             'dummyInstance' => new DummyOperation(),
-        );
+        ];
         $factory = \tx_caretakerinstance_ServiceFactory::getInstance();
         $operationManager = $factory->getOperationManager();
 
-        $result = $operationManager->executeOperation('dummyInstance', array('foo' => 'bar'));
+        $result = $operationManager->executeOperation('dummyInstance', ['foo' => 'bar']);
 
         $this->assertEquals('bar', $result->getValue());
     }

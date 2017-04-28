@@ -1,13 +1,11 @@
 <?php
 
-namespace Caretaker\CaretakerInstance\Tests\Unit;
-
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+namespace Caretaker\CaretakerInstance\Operation;
 
 /***************************************************************
  * Copyright notice
  *
- * (c) 2009-2011 by n@work GmbH and networkteam GmbH
+ * (c) 2015 by Tobias Liebig <tobias.liebig@typo3.org>
  *
  * All rights reserved
  *
@@ -38,18 +36,26 @@ use TYPO3\CMS\Core\Tests\UnitTestCase;
  *
  * $Id$
  */
-class TYPO3VersionTestServiceTest extends UnitTestCase
-{
-    public function testVersionWithAlphaIsHigherThanLowerVersions()
-    {
-        $this->markTestSkipped();
 
-        $service = new \tx_caretakerinstance_TYPO3VersionTestService();
-        $result = $service->checkVersionRange(
-            '4.3.0alpha3', // Actual version
-            '4.2.8', // Minimal allowed version
-            '' // Maximal allowed version
-        );
-        $this->assertTrue($result);
+/**
+ * A Operation which returns the current TYPO3 version
+ *
+ * @author Tobias Liebig <tobias.liebig@typo3.org>
+ *
+ */
+class GetDiskSpace implements OperationInterface
+{
+    /**
+     * @param array $parameter
+     * @return OperationResult
+     */
+    public function execute($parameter = [])
+    {
+        $path = !empty($parameter['path']) ? $parameter['path'] : '/';
+
+        return new OperationResult(true, [
+            'total' => disk_total_space($path),
+            'free' => disk_free_space($path),
+        ]);
     }
 }

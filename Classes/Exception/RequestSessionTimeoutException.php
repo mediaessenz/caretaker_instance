@@ -1,8 +1,6 @@
 <?php
 
-namespace Caretaker\CaretakerInstance\Tests\Unit;
-
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+namespace Caretaker\CaretakerInstance\Exception;
 
 /***************************************************************
  * Copyright notice
@@ -36,20 +34,18 @@ use TYPO3\CMS\Core\Tests\UnitTestCase;
  * n@work GmbH - http://www.work.de
  * networkteam GmbH - http://www.networkteam.com/
  *
- * $Id$
+ * $Id: class.tx_caretakerinstance_RequestSessionTokenFailedException.php 43024 2011-02-03 11:58:50Z matrikz $
  */
-class TYPO3VersionTestServiceTest extends UnitTestCase
-{
-    public function testVersionWithAlphaIsHigherThanLowerVersions()
-    {
-        $this->markTestSkipped();
 
-        $service = new \tx_caretakerinstance_TYPO3VersionTestService();
-        $result = $service->checkVersionRange(
-            '4.3.0alpha3', // Actual version
-            '4.2.8', // Minimal allowed version
-            '' // Maximal allowed version
-        );
-        $this->assertTrue($result);
-    }
+/**
+ * Exception for request timeout
+ *
+ * @author Martin Ficzel <martin@work.de>
+ * @author Thomas Hempel <thomas@work.de>
+ * @author Christopher Hlubek <hlubek@networkteam.com>
+ * @author Tobias Liebig <liebig@networkteam.com>
+ *
+ */
+class RequestSessionTimeoutException extends \Exception
+{
 }

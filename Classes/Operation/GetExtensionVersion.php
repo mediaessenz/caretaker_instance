@@ -1,6 +1,8 @@
 <?php
 
-namespace Caretaker\CaretakerInstance\Tests\Unit\Fixtures;
+namespace Caretaker\CaretakerInstance\Operation;
+
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /***************************************************************
  * Copyright notice
@@ -36,14 +38,38 @@ namespace Caretaker\CaretakerInstance\Tests\Unit\Fixtures;
  *
  * $Id$
  */
-class DummyOperation implements \tx_caretakerinstance_IOperation
+
+/**
+ * An Operation that returns the version of an installed extension
+ *
+ * @author Martin Ficzel <martin@work.de>
+ * @author Thomas Hempel <thomas@work.de>
+ * @author Christopher Hlubek <hlubek@networkteam.com>
+ * @author Tobias Liebig <liebig@networkteam.com>
+ *
+ */
+class GetExtensionVersion implements OperationInterface
 {
     /**
-     * @param array $parameter
-     * @return \tx_caretakerinstance_OperationResult
+     * Get the extension version of the given extension by extension key
+     *
+     * @param array $parameter None
+     * @return OperationResult The extension version
      */
     public function execute($parameter = [])
     {
-        return new \tx_caretakerinstance_OperationResult(true, $parameter['foo']);
+        $extensionKey = $parameter['extensionKey'];
+
+        if (!ExtensionManagementUtility::isLoaded($extensionKey)) {
+            return new OperationResult(false, 'Extension [' . $extensionKey . '] is not loaded');
+        }
+
+        $_EXTKEY = $extensionKey;
+        @include(ExtensionManagementUtility::extPath($extensionKey, 'ext_emconf.php'));
+
+        if (is_array($EM_CONF[$extensionKey])) {
+            return new OperationResult(true, $EM_CONF[$extensionKey]['version']);
+        }
+        return new OperationResult(false, 'Cannot read EM_CONF for extension [' . $extensionKey . ']');
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Caretaker\CaretakerInstance\Tests\Unit;
 
 use TYPO3\CMS\Core\Tests\UnitTestCase;
@@ -48,11 +49,11 @@ class CommandResultTest extends UnitTestCase
 {
     public function testCommandResultToJsonCreatesJson()
     {
-        $result = new \tx_caretakerinstance_CommandResult(true, array(
+        $result = new \tx_caretakerinstance_CommandResult(true, [
             new \tx_caretakerinstance_OperationResult(true, 'foo'),
             new \tx_caretakerinstance_OperationResult(true, false),
-            new \tx_caretakerinstance_OperationResult(true, array('foo', 'bar')),
-        ), 'Test message');
+            new \tx_caretakerinstance_OperationResult(true, ['foo', 'bar']),
+        ], 'Test message');
 
         $json = $result->toJson();
 
@@ -68,10 +69,10 @@ class CommandResultTest extends UnitTestCase
         $this->assertInstanceOf('\tx_caretakerinstance_CommandResult', $result);
         $this->assertEquals('Test message', $result->getMessage());
         $this->assertTrue($result->isSuccessful());
-        $this->assertEquals(array(
+        $this->assertEquals([
             new \tx_caretakerinstance_OperationResult(true, 'foo'),
             new \tx_caretakerinstance_OperationResult(true, false),
-            new \tx_caretakerinstance_OperationResult(true, array('foo', 'bar')),
-        ), $result->getOperationResults());
+            new \tx_caretakerinstance_OperationResult(true, ['foo', 'bar']),
+        ], $result->getOperationResults());
     }
 }

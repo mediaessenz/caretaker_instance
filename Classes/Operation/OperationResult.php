@@ -1,8 +1,6 @@
 <?php
 
-namespace Caretaker\CaretakerInstance\Tests\Unit;
-
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+namespace Caretaker\CaretakerInstance\Operation;
 
 /***************************************************************
  * Copyright notice
@@ -38,18 +36,62 @@ use TYPO3\CMS\Core\Tests\UnitTestCase;
  *
  * $Id$
  */
-class TYPO3VersionTestServiceTest extends UnitTestCase
-{
-    public function testVersionWithAlphaIsHigherThanLowerVersions()
-    {
-        $this->markTestSkipped();
 
-        $service = new \tx_caretakerinstance_TYPO3VersionTestService();
-        $result = $service->checkVersionRange(
-            '4.3.0alpha3', // Actual version
-            '4.2.8', // Minimal allowed version
-            '' // Maximal allowed version
-        );
-        $this->assertTrue($result);
+/**
+ * An Operation Result encapsulates the result of
+ * an Operation execution.
+ *
+ * @author Martin Ficzel <martin@work.de>
+ * @author Thomas Hempel <thomas@work.de>
+ * @author Christopher Hlubek <hlubek@networkteam.com>
+ * @author Tobias Liebig <liebig@networkteam.com>
+ *
+ */
+class OperationResult
+{
+    /**
+     * @var bool
+     */
+    protected $status;
+
+    /**
+     * @var array|string
+     */
+    protected $value;
+
+    /**
+     * Construct a new operation result
+     *
+     * @param bool $status
+     * @param mixed $value
+     */
+    public function __construct($status, $value)
+    {
+        $this->status = $status;
+        $this->value = $value;
+    }
+
+    /**
+     * @return bool If the operation was executed successful
+     */
+    public function isSuccessful()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @return array|string The operation value
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * @return array The Operation Result as an array
+     */
+    public function toArray()
+    {
+        return ['status' => $this->status, 'value' => $this->value];
     }
 }

@@ -38,10 +38,10 @@ if (!defined('TYPO3_MODE')) {
 }
 
 // Add eID script for caretaker instance frontend service
-$TYPO3_CONF_VARS['FE']['eID_include']['tx_caretakerinstance'] = 'EXT:caretaker_instance/eid/eid.tx_caretakerinstance.php';
+$TYPO3_CONF_VARS['FE']['eID_include']['tx_caretakerinstance'] = 'EXT:caretaker_instance/Resources/Private/Php/eID/eid.tx_caretakerinstance.php';
 
 // Register default caretaker Operations
-$operations = array(
+$operations = [
     'GetPHPVersion',
     'GetTYPO3Version',
     'GetExtensionVersion',
@@ -52,10 +52,9 @@ $operations = array(
     'MatchPredefinedVariable',
     'CheckPathExists',
     'GetDiskSpace',
-);
+];
 foreach ($operations as $operationKey) {
-    $TYPO3_CONF_VARS['EXTCONF']['caretaker_instance']['operations'][$operationKey] =
-        'EXT:caretaker_instance/classes/class.tx_caretakerinstance_Operation_' . $operationKey . '.php:&tx_caretakerinstance_Operation_' . $operationKey;
+    $TYPO3_CONF_VARS['EXTCONF']['caretaker_instance']['operations'][$operationKey] = 'Caretaker\\CaretakerInstance\\Operation\\' . $operationKey;
 }
 
 require(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('caretaker_instance') . '/ext_conf_include.php');

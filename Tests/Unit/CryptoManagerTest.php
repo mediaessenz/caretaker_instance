@@ -1,4 +1,5 @@
 <?php
+
 namespace Caretaker\CaretakerInstance\Tests\Unit;
 
 use TYPO3\CMS\Core\Tests\UnitTestCase;
@@ -82,7 +83,7 @@ class CryptoManagerTest extends UnitTestCase
     {
         $data = time();
 
-        $tokens = array();
+        $tokens = [];
         for ($i = 0; $i < 3; $i++) {
             $token = $this->cryptoManager->createSessionToken($data, $this->privateKey);
             $this->assertArrayNotHasKey($token, $tokens);

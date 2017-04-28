@@ -1,4 +1,5 @@
 <?php
+
 namespace Caretaker\CaretakerInstance\Tests\Unit;
 
 use TYPO3\CMS\Core\Tests\UnitTestCase;
@@ -50,32 +51,32 @@ class ServicesTest extends UnitTestCase
         $this->markTestSkipped();
         $stub = $this->getMock(
             '\tx_caretakerinstance_FindInsecureExtensionTestService',
-            array('getLocationList', 'executeRemoteOperations', 'checkExtension')
+            ['getLocationList', 'executeRemoteOperations', 'checkExtension']
         );
 
         $stub->expects($this->once())
             ->method('getLocationList')
             ->with()
-            ->will($this->returnValue(array('local')));
+            ->will($this->returnValue(['local']));
 
         $stub->expects($this->once())
             ->method('executeRemoteOperations')
-            ->with($this->equalTo(array(array('GetExtensionList', array('locations' => array('local'))))))
+            ->with($this->equalTo([['GetExtensionList', ['locations' => ['local']]]]))
             ->will($this->returnValue(
                 new \tx_caretakerinstance_CommandResult(
                     true,
-                    array(
+                    [
                         new \tx_caretakerinstance_OperationResult(
                             true,
-                            array(
-                                'tt_address' => array(
+                            [
+                                'tt_address' => [
                                     'isInstalled' => true,
                                     'version' => '2.1.4',
-                                    'location' => array('local'),
-                                ),
-                            )
+                                    'location' => ['local'],
+                                ],
+                            ]
                         ),
-                    )
+                    ]
                 )
             )
             );
@@ -93,13 +94,13 @@ class ServicesTest extends UnitTestCase
 
     public function providerFindInsecureExtensionGetLocationList()
     {
-        return array(
-            array(1, array('system')),
-            array(2, array('global')),
-            array(4, array('local')),
-            array(3, array('system', 'global')),
-            array(6, array('global', 'local')),
-        );
+        return [
+            [1, ['system']],
+            [2, ['global']],
+            [4, ['local']],
+            [3, ['system', 'global']],
+            [6, ['global', 'local']],
+        ];
     }
 
     /**
@@ -113,7 +114,7 @@ class ServicesTest extends UnitTestCase
 
         $stub = $this->getMock(
             '\tx_caretakerinstance_FindInsecureExtensionTestService',
-            array('getConfigValue')
+            ['getConfigValue']
         );
 
         $stub->expects($this->once())

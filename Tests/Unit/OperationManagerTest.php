@@ -1,4 +1,5 @@
 <?php
+
 namespace Caretaker\CaretakerInstance\Tests\Unit;
 
 use TYPO3\CMS\Core\Tests\UnitTestCase;
@@ -83,15 +84,15 @@ class OperationManagerTest extends UnitTestCase
     {
         $operationManager = new \tx_caretakerinstance_OperationManager();
 
-        $operation = $this->getMock('\tx_caretakerinstance_IOperation', array('execute'));
+        $operation = $this->getMock('\tx_caretakerinstance_IOperation', ['execute']);
         $operation->expects($this->once())
             ->method('execute')
-            ->with($this->equalTo(array('foo' => 'bar')))
+            ->with($this->equalTo(['foo' => 'bar']))
             ->will($this->returnValue(new \tx_caretakerinstance_OperationResult(true, 'bar')));
 
         $operationManager->registerOperation('mock', $operation);
 
-        $result = $operationManager->executeOperation('mock', array('foo' => 'bar'));
+        $result = $operationManager->executeOperation('mock', ['foo' => 'bar']);
         $this->assertTrue($result->isSuccessful());
         $this->assertEquals('bar', $result->getValue());
     }

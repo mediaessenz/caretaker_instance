@@ -1,8 +1,6 @@
 <?php
 
-namespace Caretaker\CaretakerInstance\Tests\Unit;
-
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+namespace Caretaker\CaretakerInstance\Operation;
 
 /***************************************************************
  * Copyright notice
@@ -38,18 +36,24 @@ use TYPO3\CMS\Core\Tests\UnitTestCase;
  *
  * $Id$
  */
-class TYPO3VersionTestServiceTest extends UnitTestCase
-{
-    public function testVersionWithAlphaIsHigherThanLowerVersions()
-    {
-        $this->markTestSkipped();
 
-        $service = new \tx_caretakerinstance_TYPO3VersionTestService();
-        $result = $service->checkVersionRange(
-            '4.3.0alpha3', // Actual version
-            '4.2.8', // Minimal allowed version
-            '' // Maximal allowed version
-        );
-        $this->assertTrue($result);
+/**
+ * A Operation which returns the current TYPO3 version
+ *
+ * @author Martin Ficzel <martin@work.de>
+ * @author Thomas Hempel <thomas@work.de>
+ * @author Christopher Hlubek <hlubek@networkteam.com>
+ * @author Tobias Liebig <liebig@networkteam.com>
+ *
+ */
+class GetTYPO3Version implements OperationInterface
+{
+    /**
+     * @param array $parameter None
+     * @return OperationResult the current PHP version
+     */
+    public function execute($parameter = [])
+    {
+        return new OperationResult(true, TYPO3_version);
     }
 }

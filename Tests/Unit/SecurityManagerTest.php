@@ -1,4 +1,5 @@
 <?php
+
 namespace Caretaker\CaretakerInstance\Tests\Unit;
 
 use TYPO3\CMS\Core\Tests\UnitTestCase;
@@ -70,25 +71,25 @@ class SecurityManagerTest extends UnitTestCase
         $this->securityManager->setClientPublicKey('FakeClientPublicKey');
 
         $this->commandRequest = new \tx_caretakerinstance_CommandRequest(
-            array(
+            [
                 'session_token' => '12345:abcdefg',
-                'client_info' => array(
+                'client_info' => [
                     'host_address' => '192.168.10.100',
-                ),
-                'data' => array(
+                ],
+                'data' => [
                     // Unpacked from raw data.
-                    'operations' => array(
-                        array('mock', array('foo' => 'bar')),
-                        array('mock', array('foo' => 'bar')),
-                    ),
+                    'operations' => [
+                        ['mock', ['foo' => 'bar']],
+                        ['mock', ['foo' => 'bar']],
+                    ],
                     // Fake crypted JSON
                     'encrypted' => 'xxer4rt34x',
-                ),
+                ],
                 // Data in JSON raw (fake)
                 'raw' => '{"foo": "bar"}',
                 // Signature over raw data and session token sent from client
                 'signature' => 'abcdefg',
-            ));
+            ]);
     }
 
     public function testCreateSessionToken()

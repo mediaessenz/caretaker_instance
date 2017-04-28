@@ -42,7 +42,7 @@
 class ext_update
 {
     /**
-     * @var tx_caretakerinstance_ServiceFactory
+     * @var \Caretaker\CaretakerInstance\Service\ServiceFactory
      */
     protected $factory;
 
@@ -68,7 +68,7 @@ class ext_update
     {
         $extConf = $this->getExtConf();
 
-        $this->factory = tx_caretakerinstance_ServiceFactory::getInstance();
+        $this->factory = \Caretaker\CaretakerInstance\Service\ServiceFactory::getInstance();
         try {
             list($publicKey, $privateKey) = $this->factory->getCryptoManager()->generateKeyPair();
             $extConf['crypto.']['instance.']['publicKey'] = $publicKey;
@@ -105,7 +105,7 @@ class ext_update
     {
         $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['caretaker_instance']);
         if (!$extConf) {
-            $extConf = array();
+            $extConf = [];
         }
 
         return $extConf;
